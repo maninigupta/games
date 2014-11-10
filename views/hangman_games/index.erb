@@ -2,4 +2,28 @@
 
  <button class="new-game">Start a New Game</button>
 
+<div class="game-state"></div>
+
 <p><%= letterbank %></p>
+
+<script>
+  // on window load
+$(function(){
+  console.log("manini rockzzzz :)")
+
+  $('button.new-game').on('click', function(e){
+    $.ajax({
+      url: '/hangman/new', 
+      method: 'POST',
+      dataType: 'JSON',
+      success: function(data){
+        console.log(data);
+        $('.game-state').text(data.game_state);
+      }
+    });//end of ajax request
+  }); //end of new-game event listener
+
+
+
+});
+</script>
