@@ -18,10 +18,12 @@ class HangmanGame < ActiveRecord::Base
       state = self.game_state.dup
       self.word.word.chars.each_with_index do |letter, idx|
         if letter == guess
-          state[idx] == letter
+          state[idx] = letter
         end
       end
       self.game_state = state # modify state
+    else
+      self.bad_guesses += guess
     end
   end
 

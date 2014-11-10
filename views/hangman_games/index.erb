@@ -9,7 +9,8 @@
 <script>
   // on window load
 $(function(){
-  console.log("manini rockzzzz :)")
+  console.log("manini rockzzzz :)");
+  var gameID = undefined;
 
   $('button.new-game').on('click', function(e){
     $.ajax({
@@ -19,11 +20,32 @@ $(function(){
       success: function(data){
         console.log(data);
         $('.game-state').text(data.game_state);
+        gameID = data.game_id;
       }
     });//end of ajax request
   }); //end of new-game event listener
 
+  $('.letterbank').on('click', function(e){
+    var userChoice = $(this).data('letter');
+    console.log(userChoice);
+      $.ajax({
+        url: '/hangman/' + gameID,
+        method: 'PATCH',
+        dataType: 'JSON',
+        data: {guess: userChoice},  // data: Stuff to send to the server
+        success: function(data){    // data: stuff sent back from the server
+          $('.game-state').text(data.game_state);
+            // if (data.bad_guesses.length > 5){
+            //   alert("You lose, loser!")
+            //   window.location = '/hangman';}
+            // if (data.complete?){
+            //   alert("Congrats, you won!")
+            //   window.location = '/hangman';}
+          console.log(data);
+        } //end of callback function
+      }); //end of ajax request
 
+  }); //end of letterbank event listener
 
-});
+}); //end of on window load function
 </script>

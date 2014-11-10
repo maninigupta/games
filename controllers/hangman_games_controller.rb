@@ -13,7 +13,22 @@ class HangmanGamesController < ApplicationController
       game_id: game.id,
       game_state: game.game_state,
       bad_guesses: game.bad_guesses,
-      }.to_json
+    }.to_json
+  end
+
+  patch '/:id' do
+    content_type :json
+    game = HangmanGame.find(params[:id])
+    game.guess_letter!(params[:guess].downcase)
+    # game.complete?
+
+    # game = HangmanGame.find_by({id: params[:id]})
+    {
+      word: game.word.word,
+      game_id: game.id,
+      game_state: game.game_state,
+      bad_guesses: game.bad_guesses,
+    }.to_json
   end
 
   # accent_sent_from_client = params[:accentFromClient]
