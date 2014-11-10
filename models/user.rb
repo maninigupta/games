@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include BCrypt
-  has_many :XXXXXXXXXXX
+  has_many :hangman_games
 
   def password
     @password ||= Password.new(self.password_hash)
@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
     @password = Password.create(new_password)
     self.password_hash = @password
   end
+
 end

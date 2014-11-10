@@ -22,4 +22,18 @@ namespace :db do
     conn.exec('DROP DATABASE games;')
     conn.close
   end
+
+
+  desc "insert CSV data into entries table"
+  task :load_data do
+    require 'csv'
+    require './models/word'
+    CSV.foreach('word.csv') do |word|
+      word = word[0]
+
+      Word.create!({
+        word: word,
+        })
+    end
+  end
 end
